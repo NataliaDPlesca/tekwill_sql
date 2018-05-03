@@ -10,7 +10,12 @@ git commands:
 	$ git add lesson1/		- adauga o resursade pe git pe PC
 
 	/e/projects/tekwill_sql/src/tekwill_sql (master)
-	$ git commit -am "primult meu commit"		- fac un comentariu
+	$ git commit -am "primult meu commit"		- face o inserare de o noua versiune a unei resurse
 
 	/e/projects/tekwill_sql/src/tekwill_sql (master)
 	$ git push		- pompez o resursa de pe PC pe git
+	
+	git status 	- vedem statutul sesiunii
+
+http://education.oracle.com/pls/web_prod-plq-dad/db_pages.getpage?page_id=900&get_params=cloudId:950
+
