@@ -7,7 +7,7 @@ Docs shareing
 
 git commands:
 	/e/projects/tekwill_sql/src/tekwill_sql (master)
-	$ git add lesson1/		- adauga o resursade pe git pe PC
+	$ git add lesson1/		- adauga o resursa de pe git pe PC
 
 	/e/projects/tekwill_sql/src/tekwill_sql (master)
 	$ git commit -am "primult meu commit"		- face o inserare de o noua versiune a unei resurse
