@@ -1,2 +1,3 @@
 -am analizat cum se proiecteaza BD
 -am analizat rorul cheii primare si a cheii straine
+-test
