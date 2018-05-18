@@ -1,0 +1,11 @@
+ctrl+enter sau  f9 = executa interogarea
+-- sau /*...*/ = comentarea unei linii sau mai multe linii
+f5 - run script
+
+Scripturi SQL
+--select * from employees;
+--select (salary*1.5)*12 from EMPLOYEES;
+--select distinct manager_id from EMPLOYEES;
+--select salary+salary*10/100 from employees;
+--select * from EMPLOYEES;
+describe employees;
