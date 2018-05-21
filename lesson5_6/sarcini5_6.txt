@@ -1,0 +1,36 @@
+--select * from EMPLOYEES;
+--select employee_id, salary*1.1 AS salary_increase, salary*10 AS annual_salary, first_name, last_name from EMPLOYEES;
+--select first_name||' '||last_name AS full_name, email, phone_number
+--from employees;
+select first_name||q'[ don't ]' AS test1
+from employees;
+
+select distinct salary from EMPLOYEES;
+
+select * from ad_faculty_course_details;
+
+select distinct faculty_id from ad_faculty_course_details;
+
+select distinct * from ad_faculty_course_details;
+describe employees;
+descr employees;
+
+select * from employees
+where department_id=90;
+
+
+select * from employees
+where first_name='Steven';
+
+select * from employees
+where hire_date='17-06-2011';
+
+select sysdate from dual;
+
+select * from employees where not(employee_id=100);
+
+select * from employees
+where salary between 1000 and 5000;
+
+select * from employees
+where salary >=1000 and salary<=5000;
