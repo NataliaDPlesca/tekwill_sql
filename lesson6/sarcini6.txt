@@ -1,0 +1,40 @@
+select first_name||' '||last_name as "full_name", phone_number
+from employees
+--where department_id in (10, 50, 90);
+--where hire_date in ('17-09-2011', '29-01-2013');
+--where first_name in ('Bruce', 'Peter');
+--where last_name LIKE 'T%';
+--where first_name LIKE 't%'; - nimic - case sensitive
+--where first_name LIKE 'C__t%'; -  o inregistrare
+where phone_number like '6%';
+
+select * from employees
+where commission_pct is not null;
+
+select * from employees
+where commission_pct is null;
+
+select * from employees
+where commission_pct is null and department_id=90 and first_name like 'S%';
+
+select * from employees
+where (department_id=60 or department_id=80) and salary> 10000;
+
+select * from employees
+where department_id=60 or department_id=80 and salary> 10000;
+
+select * from employees
+where department_id=60 or department_id=80 and salary> 10000
+order by salary;
+
+select * from employees
+where department_id=60 or department_id=80 and salary> 10000
+order by salary DESC;
+
+select * from employees
+where department_id=60 or department_id=80 and salary> 10000
+order by salary DESC, hire_date;
+
+select salary*12 as salary_new from employees
+--where salary_new>3000 - greseala
+order by salary_new;
