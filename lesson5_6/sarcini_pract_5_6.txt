@@ -1,0 +1,80 @@
+select student_id, first_name, student_reg_year as addmission 
+from ad_student_details;
+
+select *
+from ad_course_details;
+
+describe ad_student_details;
+
+select student_id, first_name, student_reg_year + 2 as course_expiry
+from ad_student_details;
+
+describe ad_course_details;
+
+select * from ad_course_details;
+
+describe ad_student_details;
+
+select STUDENT_ID, FIRST_NAME, PARENT_ID, STUDENT_REG_YEAR as REGISTRATION 
+from ad_student_details;
+
+describe ad_exam_details;
+
+select DISTINCT name 
+from ad_exam_details;
+
+select STUDENT_ID as "STUDENT #", FIRST_NAME as "STUDENT", PARENT_ID as "PARENT INFORMATION", STUDENT_REG_YEAR as "REGISTERED ON" 
+from ad_student_details;
+
+describe ad_course_details;
+
+select COURSE_ID||', '||COURSE_NAME as "Course ID and Title"
+from ad_course_details;
+
+describe ad_course_details;
+
+select course_id||', '||course_name||', '||session_id||', '||department_id as THE_OUTPUT
+from ad_course_details;
+
+describe ad_student_attendance;
+
+select student_id, NO_OF_DAYS_OFF
+from ad_student_attendance
+where NO_OF_DAYS_OFF>15;
+
+select COURSE_NAME, DEPARTMENT_ID
+from AD_COURSE_DETAILS
+where COURSE_ID = 199;
+
+select STUDENT_ID, MARKS
+from AD_EXAM_RESULTS
+where MARKS not between 65 and 90; 
+
+select STUDENT_ID, FIRST_NAME, STUDENT_REG_YEAR
+from AD_STUDENT_DETAILS
+where FIRST_NAME in ('ROBERT', 'NINA')
+order by STUDENT_REG_YEAR;
+
+select COURSE_NAME, DEPARTMENT_ID
+from AD_COURSE_DETAILS
+where DEPARTMENT_ID = 20 or DEPARTMENT_ID = 40
+order by COURSE_NAME;
+
+select STUDENT_ID as "Student #", MARKS as "Semester Marks"
+from AD_EXAM_RESULTS
+where (MARKS between 65 and 90) and (COURSE_ID in (199, 189)); 
+
+select * from AD_STUDENT_DETAILS;
+
+select FIRST_NAME, STUDENT_REG_YEAR
+from AD_STUDENT_DETAILS
+where STUDENT_REG_YEAR between '01-01-2014' and '31-12-2014';
+
+select FIRST_NAME, PARENT_ID
+from AD_STUDENT_DETAILS
+where EMAIL_ADDR is null;
+
+select FIRST_NAME, STUDENT_REG_YEAR, EMAIL_ADDR
+from AD_STUDENT_DETAILS
+where EMAIL_ADDR is not null
+order by STUDENT_REG_YEAR desc, EMAIL_ADDR desc;
