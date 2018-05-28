@@ -1,0 +1,83 @@
+select employee_id, first_name
+from employees
+--order by employee_id
+fetch first 5 rows only;
+
+select employee_id, first_name
+from employees
+order by employee_id
+fetch first 8 rows with ties;
+
+select *
+from employees
+where employee_id=&identificator;
+
+select first_name, last_name
+from employees
+where employee_id=&identificator;
+
+select first_name, last_name
+from employees
+where employee_id=&identificator
+order by &number;
+
+select *
+from employees;
+
+select first_name, last_name
+from employees
+where email='&email';
+
+select first_name, last_name, &&column
+from employees
+where &column='&email';
+
+select first_name, last_name, &&column
+from employees
+order by &&column;
+
+select first_name, last_name, &column
+from employees
+order by &column;
+
+undefine column;
+
+select first_name, last_name, &&column
+from employees
+order by &&column;
+
+define column='email';
+
+select first_name, last_name, &&column
+from employees
+order by &&column;
+
+undefine column;
+
+select first_name, last_name, &&column
+from employees
+order by &&column;
+
+set verify on;
+select first_name, last_name, &&column
+from employees
+order by &&column;
+
+select first_name, last_name, lower(email) from employees;
+
+select first_name, upper(last_name), lower(email) from employees;
+
+select first_name, last_name, initcap(email) as mail from employees;
+
+select concat(first_name, last_name), initcap(email) as mail from employees;
+
+select concat(first_name, concat(' ', last_name)) as Nume_prenume, initcap(email) as mail from employees;
+
+select first_name, substr(last_name, 3), email from employees;
+
+select substr(job_id, 1,2) from employees;
+
+select substr(job_id, -2,2) from employees;
+
+select * from employees;
+select substr(job_id, 3) from employees;
