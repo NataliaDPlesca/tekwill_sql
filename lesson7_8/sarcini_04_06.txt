@@ -1,0 +1,91 @@
+select sysdate
+from dual;
+
+select sysdate+0.4
+from dual;
+
+select (sysdate-hire_date)/7 as saptamani
+from employees;
+
+select round((sysdate-hire_date)/7, 2) as saptamani
+from employees;
+
+select months_between(sysdate, hire_date) as nr_luni
+from employees;
+
+select round(months_between(sysdate, hire_date), 1) as nr_luni
+from employees;
+
+select first_name, last_name
+from employees
+where round(months_between(sysdate, hire_date), 1) <=36; --au lucrat mai putin de 3 ani
+
+SELECT
+    employee_id,
+    first_name,
+    last_name,
+    to_char(hire_date, 'year') as anul
+FROM
+    employees
+where employee_id in (100, 101, 210);
+
+SELECT
+    employee_id,
+    first_name,
+    last_name,
+    to_char(hire_date, 'YYYY') as anul
+FROM
+    employees
+where employee_id in (100, 101, 210);
+
+SELECT
+    employee_id,
+    first_name,
+    last_name,
+    to_char(hire_date, 'Day') as anul
+FROM
+    employees
+where employee_id in (100, 101, 210);
+
+SELECT
+    employee_id,
+    first_name,
+    last_name,
+    to_char(hire_date, 'Month') as anul
+FROM
+    employees
+where employee_id in (100, 101, 10);
+    
+SELECT
+    employee_id,
+    first_name,
+    last_name
+FROM
+    employees
+where  to_char(hire_date, 'yyyy') ='2013';
+
+select sysdate, to_char(sysdate, 'DD/MM/YYYY')
+from dual;
+
+select sysdate, to_char(sysdate, 'dd/RM/yyyy')
+from dual;
+
+SELECT
+    first_name,
+    last_name,
+    to_char(hire_date, 'DD Month YYYY') as format_data,
+    to_char(hire_date, 'fmDD Month YYYY') as format_data
+FROM
+    employees;
+    
+select to_char(125, '9999.99')
+from dual;
+
+select to_char(1255, '99,9999.99')
+from dual;
+
+select to_char(122255, '99,9999.99U')
+from dual;
+
+select to_char(122255, '$99,9999.99')
+from dual;
