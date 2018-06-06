@@ -1,0 +1,111 @@
+SELECT
+    last_name,
+    hire_date,
+    to_date('Mai 24, 2015', 'Month DD, YYYY'),
+    to_date('Mai 24, 2015', 'fxMonth DD, YYYY')
+FROM
+    employees
+where hire_date > to_date('Mai 24, 2015', 'fxMonth DD, YYYY');
+
+select sysdate from dual;
+
+SELECT
+    last_name,
+    hire_date,
+    to_date('May 24, 2015', 'Month DD, YYYY'),
+    to_date('May 24, 2015', 'fxMonth DD, YYYY')
+FROM
+    employees
+where hire_date > to_date('May 24, 2015', 'fxMonth DD, YYYY');
+
+select * from employees
+where employee_id > to_number('150.00');
+
+SELECT
+    last_name,
+    hire_date,
+    to_date('24 May, 2015', 'DD Month, YYYY'),
+    to_date('24 May, 2015', 'DD fxMonth, YYYY')
+FROM
+    employees
+where hire_date > to_date('24 May, 2015', 'DD fxMonth, YYYY');
+
+SELECT
+    last_name,
+    hire_date,
+    to_char(hire_date, 'DD.MM.YYYY')
+FROM
+    employees
+where hire_date < to_date(to_char(sysdate, 'DD.MM.YYYY'),'DD.MM.YYYY');
+
+SELECT
+    last_name,
+    salary,
+    NVL(commission_pct, 0),
+    (salary*12)+(salary*12*NVL(commission_pct,0)) salariuAnual
+FROM
+    employees;
+    
+SELECT
+    last_name,
+    salary,
+    commission_pct,
+    NVL2(commission_pct, 10, 0),
+    (salary*12)+(salary*12*NVL(commission_pct,0)) salariuAnual
+FROM
+    employees;
+    
+SELECT
+    last_name,
+    salary,
+    commission_pct,
+    (salary*12)-(salary*12*NVL(commission_pct, 0)) salariuAnual
+FROM
+    employees;
+    
+SELECT
+    last_name,
+    length(last_name),
+    salary,
+    length(salary),
+    nullif(length(last_name), length(salary)) comparare
+FROM
+    employees;
+    
+select coalesce(null, null, 10, 20, null)
+from dual;
+
+SELECT
+    commission_pct, 
+    manager_id, 
+    department_id,
+    coalesce(commission_pct, manager_id, department_id) 
+FROM
+    employees;
+
+    
+select coalesce(null, null, null)
+from dual;
+
+SELECT
+    last_name,
+    job_id,
+    salary,
+    case job_id when upper('it_prog') then 1.10*salary
+                when upper('sa_rep') then 1.20*salary
+                else salary
+    end salariu_calculat
+FROM
+    employees;
+    
+select
+    case job_id when 'AD_VP' then 'AD_VP_Job'
+                when 'ST_MAN' then 'ST_MAN_Job'
+    else job_id
+    end first_case,
+    
+    case    when salary >1000 and job_id <> 'ST_MAN' then 'Testam'
+            when salary <1000 and job_id <> 'AD_VP' then 'Testam iar'
+    else 'ramane la fel'
+    end ne_jucam
+from employees;
