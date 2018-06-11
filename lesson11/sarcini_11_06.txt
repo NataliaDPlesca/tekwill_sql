@@ -1,0 +1,139 @@
+SELECT
+    employee_id,
+    first_name,
+    last_name,
+    department_id
+FROM
+    employees 
+join departments
+using (department_id);
+
+SELECT
+    employee_id,
+    first_name,
+    last_name,
+    department_id, job_id
+   
+FROM employees join departments using (department_id)
+               join jobs using (job_id);
+               
+SELECT
+    employee_id,
+    first_name,
+    last_name,
+    department_id, job_id,
+    street_address
+FROM employees join departments using (department_id)
+               join jobs using (job_id)
+               join locations using (location_id);
+               --join job_hystory using (job_id);
+
+SELECT
+    e.employee_id,
+    e.first_name,
+    e.last_name,
+    department_id, 
+    job_id,
+    l.street_address
+FROM employees e 
+               join departments d using (department_id)
+               join jobs j using (job_id)
+               join locations l using (location_id);   
+
+SELECT
+    e.employee_id,
+    e.first_name,
+    e.last_name,
+    d.department_id, 
+    j.job_id
+FROM employees e 
+               join departments d on (e.department_id=d.department_id)
+               join jobs j on (e.job_id=j.job_id);
+
+SELECT
+    e.employee_id,
+    e.first_name,
+    e.last_name,
+    d.department_id, 
+    j.job_id,
+    l.street_address
+FROM employees e 
+               join departments d on (e.department_id=d.department_id)
+               join jobs j on (e.job_id=j.job_id)
+               join locations l using (location_id);   
+
+SELECT
+    e.employee_id,
+    e.first_name,
+    e.last_name,
+    d.department_id, 
+    j.job_id,
+    l.street_address
+FROM employees e 
+               join departments d on (e.department_id=d.department_id)
+               join jobs j on (e.job_id=j.job_id)
+               join locations l on (d.location_id=l.location_id);  
+               
+SELECT
+    e.employee_id,
+    e.first_name,
+    e.last_name,
+    d.department_id, 
+    j.job_id,
+    l.street_address,
+    l.city,
+    jh.job_id
+FROM employees e 
+               join departments d on (e.department_id=d.department_id)
+               join jobs j on (e.job_id=j.job_id)
+               join locations l on (d.location_id=l.location_id)
+               join job_history jh on (j.job_id=jh.job_id);  
+
+SELECT
+    e.employee_id,
+    e.first_name,
+    e.last_name,
+    d.department_id, 
+    j.job_id,
+    l.street_address,
+    l.city,
+    jh.job_id
+FROM employees e 
+               join departments d on (e.department_id=d.department_id)
+               join jobs j on (e.job_id=j.job_id)
+               join locations l on (d.location_id=l.location_id)
+               join job_history jh on (j.job_id=jh.job_id)
+where sysdate > end_date
+order by 1;  
+
+select * from job_history;
+
+SELECT
+    e.employee_id,
+    e.first_name,
+    e.last_name,
+    d.department_id, 
+    j.job_id,
+    l.street_address,
+    l.city,
+    jh.job_id
+FROM employees e 
+               join departments d on (e.department_id=d.department_id)
+               join jobs j on (e.job_id=j.job_id)
+               join locations l on (d.location_id=l.location_id)
+               join job_history jh on (j.job_id=jh.job_id)
+where e.hire_date<'27-OCT-12' AND j.job_id in ('AC_MGR', 'IT_PROG')
+order by 1;
+
+select worker.last_name||' '||worker.first_name emp, manager.last_name mgr
+from employees worker join employees manager
+on worker.manager_id=manager.employee_id;
+
+
+select worker.last_name||' '||worker.first_name emp, manager.last_name mgr
+from employees worker join employees manager
+on worker.manager_id=manager.employee_id;
+
+select e.last_name, e.salary, j.grade_level
+from employees e JOIN job_grades j ON e.salary between j.lowest_sal and j.highest_sal
+order by 2;
