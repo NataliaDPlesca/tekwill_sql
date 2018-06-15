@@ -1,0 +1,33 @@
+select job_id, last_name from employees
+union
+select job_id, last_name from retired_employees;
+
+select job_id, last_name from employees
+union all
+select job_id, last_name from retired_employees;
+
+select job_id, null, last_name from employees
+union
+select job_id, first_name, last_name from retired_employees;
+
+select job_id, last_name from employees
+intersect
+select job_id, last_name from retired_employees;
+
+select job_id, last_name from employees
+minus
+select job_id, last_name from retired_employees;
+
+select job_id, last_name from retired_employees
+minus
+select job_id, last_name from employees;
+
+select job_id, last_name from retired_employees
+minus
+select job_id, last_name from employees
+order by 1;
+
+select job_id, last_name, salary from retired_employees
+union
+select job_id, last_name, 0 from employees
+order by 1;
