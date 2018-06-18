@@ -1,0 +1,80 @@
+SELECT
+    first_name,
+    last_name, HIRE_DATE
+FROM
+    employees
+where HIRE_DATE > (SELECT HIRE_DATE
+                   FROM employees
+                   where last_name = 'Davies');
+
+SELECT
+*
+FROM
+    employees
+where job_id in (select job_id
+                 FROM employees
+                 where salary >5000);
+                 
+SELECT
+*
+FROM
+    employees
+where job_id in (select job_id
+                 FROM employees
+                 where salary >5000)
+and phone_number in (select phone_number 
+                    from employees 
+                    where phone_number like '515%');
+                    
+select * from employees 
+where salary > (select avg(salary)
+                from employees);
+				
+select *
+from employees
+where job_id in (select job_id
+                from employees
+                where last_name like 'K%');
+
+SELECT
+    employee_id,
+    last_name,
+    job_id,
+    salary
+FROM
+    employees
+where salary < any (select salary
+                    from employees
+                    where job_id = 'IT_PROG')
+and job_id <> 'IT_PROG';
+
+SELECT
+    employee_id,
+    last_name,
+    job_id,
+    salary
+FROM
+    employees
+where salary < all (select salary
+                    from employees
+                    where job_id = 'IT_PROG')
+and job_id <> 'IT_PROG';
+
+select first_name, department_id, salary
+from employees
+where (salary, department_id) in (select min(salary), department_id
+                                    from employees
+                                    group by department_id)
+order by department_id;
+
+select *
+from employees emp
+where emp.manager_id NOT IN (select mpr.manager_id
+                            from employees mpr);
+                            
+select *
+from employees emp
+where emp.manager_id IN (select mpr.manager_id
+                            from employees mpr);
+
+							
