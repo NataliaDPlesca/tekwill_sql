@@ -1,0 +1,53 @@
+create view lands_v (id, name, reg_id)
+as select * from lands;
+
+select * from lands_v;
+
+create or replace view lands_v (id, name, reg_id)
+as select * from lands;
+
+create or replace view lands_vv (id, name, reg_id)
+as select * from landss;
+
+select * from lands_vv;
+
+create or replace view lands_v (id, name, reg_id)
+as select * from lands
+where region_id=2;
+
+select * from lands_v;
+
+create or replace view lands_v (id, name, reg_id)
+as select * from lands
+where region_id=2
+and country_id='US'
+with check option constraint lands_v_ck_regid;
+
+select * from lands_v;
+
+update lands_v set id='US';
+
+describe lands_v;
+
+select * from user_views;
+
+drop view lands_v;
+
+select * from user_views;
+
+select * from ora01.lands_v;
+
+update lands_v set reg_id='11';
+
+create sequence id_seq
+start with 1
+increment by 2
+--minvalue 1
+--maxvalue 99999
+nocache
+order;
+
+select id_seq.currval from dual;
+select id_seq.nextval from dual;
+
+select id_seq.nextval as ID, a.* from employees a;
