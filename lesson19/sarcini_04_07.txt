@@ -1,0 +1,28 @@
+delete from emp2 where department_id=20;
+
+select * from departments;
+
+alter table emp2
+add constraints emps_department foreign key(department_id)
+references departments(department_id) on delete set null;
+
+select * from emp2;
+
+delete from emp2 where department_id=10;
+
+select * from departments;
+
+delete from departments where department_id=10;
+
+select * from employees;
+
+create global temporary table cart (n number, d date)
+--on commit delete rows;
+
+insert into cart values(1001, sysdate);
+insert into cart values(1001, sysdate+2);
+
+select * from cart;
+
+commit;
+select * from cart;
