@@ -1,0 +1,51 @@
+create table test_table (
+    column1 number(3) constraint test_primary_key primary key,
+    column2 date,
+    column3 varchar2(10) not null
+);
+
+describe test_table;
+
+create table test_uniq_table (
+    column1 number(3), --constraint test_primary_key primary key,
+    column2 date,
+    column3 varchar2(10) not null,
+    column4 varchar(10) constraint test_uniq_table unique
+);
+
+describe test_uniq_table;
+
+create table test_check_table (
+    column1 number(3), --constraint test_primary_key primary key,
+    column2 date,
+    column3 varchar2(10) check (column3='Female'),
+    column4 varchar(10)
+);
+
+describe test_check_table;
+
+create table test_check1_table (
+    column1 number(3), --constraint test_primary_key primary key,
+    column2 date,
+    column3 varchar2(10),
+    column4 varchar(10),
+    check (column3='Female')
+);
+
+describe test_check1_table;
+
+create table apps
+as select * from employees;
+
+select * from apps;
+
+create table apps1
+as select * from employees
+where department_id=60;
+
+select * from apps1;
+
+alter table apps1
+add (job_cod varchar(8));
+
+select * from apps1;
