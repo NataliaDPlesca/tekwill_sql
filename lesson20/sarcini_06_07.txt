@@ -1,0 +1,58 @@
+select department_id, department_name,
+    (select count(*) from employees e
+        where e.department_id = d.department_id) as emp_count
+from departments d;
+
+select employee_id, last_name, 
+    (case when department_id = (
+                                select department_id from departments where location_id = 1800
+                                )
+        then 'Canada' else 'USA' 
+        end) location
+from employees;
+
+select last_name, salary, department_id
+from employees auter_table
+where salary >  (SELECT avg(salary)
+                from employees inner_table
+                where inner_table.department_id = auter_table.department_id);
+                
+select last_name, salary, department_id
+from employees auter_table
+where salary >  (SELECT avg(salary)
+                from employees inner_table
+                where inner_table.department_id = auter_table.department_id)
+and auter_table.employee_id = 100;
+
+select *
+from employees auter_table
+join (SELECT round(avg(salary)) avg_salary, department_id
+      from employees inner_table
+      group by department_id)inner_table
+      on inner_table.department_id = auter_table.department_id
+where auter_table.employee_id = 100;
+
+select department_id, employee_id, salary
+from employees e
+where 1 = 1;
+
+select department_id, employee_id, salary
+from employees e
+where 1 = (select count(distinct salary)
+            from employees 
+            where e.department_id = department_id
+            and e.salary <= salary
+            );
+            
+select count(distinct salary), department_id
+from employees e
+group by department_id;
+
+select department_id, employee_id, salary
+from employees e
+where 1 = (select count(distinct salary)
+            from employees 
+            where e.department_id = department_id
+            and e.salary <= salary
+            )
+and department_id=90;
