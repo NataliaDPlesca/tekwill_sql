@@ -1,0 +1,234 @@
+--utilizator 03 - Natalia Plesca
+--sarcina 1
+create table author (
+                author_id NUMBER(6,0)
+                    constraint athr_pk PRIMARY KEY,
+                author_name VARCHAR2(25) NOT NULL
+                    );
+					
+create table members (
+                member_id NUMBER(6,0)
+                    constraint members_pk PRIMARY KEY,
+                first_name VARCHAR2(25) NOT NULL, 
+                last_name VARCHAR2(20) NOT NULL, 
+                street_adress VARCHAR2(60), 
+                city VARCHAR2(25) NOT NULL, 
+                state VARCHAR2(35) NOT NULL, 
+                zip number(6,0)
+                    );
+
+create table publisher (
+                publisher_id NUMBER(6,0)
+                    constraint publr_pk PRIMARY KEY,
+                publisher_name VARCHAR2(25) NOT NULL
+                    );
+					
+create table books (
+                book_id NUMBER(6,0)
+                    constraint book_pk PRIMARY KEY,
+                title VARCHAR2(50) NOT NULL,
+                publisher_id number(6,0),
+                    constraint books_publr_fk foreign key (publisher_id) references publisher(publisher_id),
+                author_id number(6,0),
+                    constraint books_auth_fk foreign key (author_id) references author(author_id)
+                    );
+					
+create table book_trns (
+                trns_id NUMBER(6,0)
+                    constraint book_trns_pk PRIMARY KEY,
+                trns_date DATE NOT NULL,
+				trns_type VARCHAR2(20) NOT NULL,
+				book_id number(6,0), 
+				member_id number(6,0)
+                    );
+--sarcina 2	
+	--am verificat	
+--sarcina 3					
+alter table book_trns 
+modify (
+        constraint books_trns_fk foreign key (book_id) references books(book_id),
+        constraint member_trns_fk foreign key (member_id) references members(member_id)
+        );
+		
+--sarcina 4
+create sequence book_trns_id_seq 
+    start with 500
+    increment by 1
+    nocache;
+    
+alter table book_trns 
+modify (
+    trns_id NUMBER(6,0) default book_trns_id_seq.nextval
+    );
+	
+--sarcina 5
+--date in tabelul author
+--am creat o secventa pentru a incrementa automat valori pentru campul author_id si voi adauga valori doar pentru author_name
+create sequence auth_id_seq 
+    start with 101
+    increment by 1
+    nocache;
+    
+alter table author 
+modify (
+    author_id NUMBER(6,0) default auth_id_seq.nextval
+    );
+    
+insert into author (author_name) values ('&author_name');
+--asa am inserat cele 8 inregistrari
+
+--date in tabelul publisher
+--si aici am creat o secventa pentru a incrementa automat valori pentru campul publisher_id si voi adauga valori doar pentru publisher_name
+create sequence publ_id_seq 
+    start with 301
+    increment by 1
+    nocache;
+    
+alter table publisher 
+modify (
+    publisher_id NUMBER(6,0) default publ_id_seq.nextval
+    );
+    
+insert into publisher (publisher_name) values ('&publisher_name');
+--select * from publisher; --ok
+--iterativ, am adaugat cele 10 inregistrari
+
+
+--date pentru tabelul books
+--am creat secventa si am atribuit-o lui book_id
+create sequence book_id_seq 
+    start with 401
+    increment by 1
+    nocache;
+    
+alter table books 
+modify (
+    book_id NUMBER(6,0) default book_id_seq.nextval
+    );
+    
+insert into books (title, author_id, publisher_id) values ('&title', &author_id, &publisher_id);
+--select * from books; -- ok
+
+--date pentru tabelul members
+create sequence member_id_seq 
+    start with 201
+    increment by 1
+    nocache;
+    
+alter table members 
+modify (
+    member_id NUMBER(6,0) default member_id_seq.nextval
+    );
+    
+insert into members (first_name, last_name, street_adress, city, state, zip) 
+values ('&first_name', '&last_name', '&street_adress', '&city', '&state', &zip);
+
+--select * from members; --ok
+
+--date pentru tabelul book_trns
+
+insert into book_trns (trns_date, trns_type, book_id, member_id) 
+values ('&trns_date', '&trns_type', &book_id, &member_id);
+
+--select * from book_trns; --ok
+
+--sarcina 6
+create or replace view MEMBER_DETAILS
+as select m.first_name || ' ' || m.last_name "Member Name",
+          m.street_adress as Address, m.city, b.book_id, to_char(b.trns_date, 'dd-MON-YYYY') "Date borrowed", b.trns_type "Member type" from members m left join book_trns b on (m.member_id=b.member_id)
+order by m.member_id;
+
+--select * from MEMBER_DETAILS; --ok
+
+--sarcina 7
+--am verificat existenta autorului si daca acesta nu este in tabel - il adaug
+Insert All
+When Nr = 0 Then
+Into AUTHOR (AUTHOR_NAME) values ('Charles Dickens')
+Select * From (select Count(*) as Nr from AUTHOR where AUTHOR_NAME ='Charles Dickens') a;
+
+--verific daca este publicatia Inc Publication (ea este deja in lista) si daca nu este se va adauga
+Insert All
+When Nr = 0 Then
+Into publisher (publisher_name) values ('Inc Publication')
+Select * From (select Count(*) as Nr from publisher where publisher_name ='Inc Publication') p;
+
+--acum inserez in tabelul BOOKS inregistrarea necesara
+insert into books (title, author_id, publisher_id) values ('Great Expectations', 109, 305);
+
+--sarcina 8
+select m.first_name || ' ' || m.last_name "Name", m.street_adress as Address, m.city, to_char(b.trns_date, 'dd-MON-YYYY') "Date borrowed", bo.title 
+from book_trns b join members m on (b.member_id=m.member_id) 
+                 join books bo on (b.book_id=bo.book_id) where bo.title='Jungle Book';
+--afisaj - John William si datele lui personale, a luat Jungle Book, la ce data	
+
+--sarcina 9
+select m.first_name || ' ' || m.last_name "Name", m.street_adress as Address, m.city, to_char(b.trns_date, 'dd-MON-YYYY') "Date borrowed", bo.title 
+from book_trns b join members m on (b.member_id=m.member_id) 
+                 join books bo on (b.book_id=bo.book_id) where bo.title='Shakuntala';
+--au fost afisate2 inregistrari
+
+--sarcina 10
+select a.author_name, bo.book_id, bo.title
+from author a join books bo on (a.author_id=bo.author_id) where a.author_name='Shakespeare';
+
+--sarcina 11
+alter table books
+add (no_of_copies number(6,0) default 0 NOT NULL);
+
+--sarcina 12
+update books set no_of_copies=10 where book_id=401;
+update books set no_of_copies=6 where book_id=402;
+update books set no_of_copies=4 where book_id=403;
+update books set no_of_copies=3 where book_id=404;
+update books set no_of_copies=8 where book_id=405;
+update books set no_of_copies=9 where book_id=406;
+update books set no_of_copies=9 where book_id=407;
+update books set no_of_copies=2 where book_id=408;
+update books set no_of_copies=7 where book_id=409;
+update books set no_of_copies=5 where book_id=410;
+update books set no_of_copies=2 where book_id=411;
+update books set no_of_copies=4 where book_id=412;
+update books set no_of_copies=6 where book_id=413;
+--ok
+
+--sarcina 13
+select m.first_name || ' ' || m.last_name "Name", to_char(b.trns_date, 'dd-MON-YYYY') "Date borrowed", bo.title 
+from book_trns b join books bo on (b.book_id=bo.book_id) 
+                 join members m on (b.member_id=m.member_id) where (m.first_name='King' and m.last_name='George');
+--se va afisa lista cartilor si data la care au fost inchiriate aceste cartilor
+
+--sarcina 14
+select m.first_name||' '||m.last_name as "Name", m.street_adress as Address, m.city, m.state, m.zip,  bt.Nr 
+from members m left join (select member_id, count(*) Nr from book_trns  group by member_id) bt on (bt.member_id = m.member_id)
+where nvl(bt.nr,0) >=2;
+--am exclus comparatia cu NULL, in where, in cazul in care vor fi asa valori
+
+--sarcina 15
+select table_name from user_tables;
+--s-a afisat lista tabelelor la care am acces
+
+--sarcina 16
+create or replace view BOOKS_VIEW
+as select b.title, a.author_name, b.no_of_copies 
+from author a join books b on (a.author_id=b.author_id);
+
+--pentru verificare
+select * from BOOKS_VIEW; --ok
+
+
+--sarcina 17
+create user login_books
+identified by books;
+--dar nu pot verifica executia
+--presupun ca asa - ca tot nu pot executa in Apex
+grant select
+on BOOKS_VIEW
+to login_books;
+
+--sarcina 18 fara Developer - este irealizabila
+
+
+
+
+
